@@ -15,18 +15,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.nikeapp.R
+import com.example.nikeapp.screens.NavGraph.Screen
 import com.example.nikeapp.ui.theme.Typography
 import com.example.nikeapp.ui.theme.backgroundSplash
 
 
-@Preview(
-    showSystemUi = true,
-    showBackground = true,
-    uiMode = UI_MODE_NIGHT_NO
-)
 @Composable
-fun Splash() {
+fun Splash(
+    navController: NavController
+) {
     Surface(
         color = backgroundSplash, modifier = Modifier.fillMaxSize()
     ) {
@@ -55,7 +55,28 @@ fun Splash() {
                 fontWeight = FontWeight.Black,
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp)
             )
-            ButtonGetStarted()
+            Button(
+                onClick = {
+                    navController.navigate(route = Screen.Home.route)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White
+                ),
+                shape = RoundedCornerShape(50),
+                modifier = Modifier
+                    .padding(
+                        start = 20.dp,
+                        top = 70.dp
+                    )
+            ) {
+                Column {
+                    Text(
+                        text = "Get Started",
+                        style = Typography.button,
+                        modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp)
+                    )
+                }
+            }
         }
         Column(
             verticalArrangement = Arrangement.Bottom,
@@ -66,31 +87,14 @@ fun Splash() {
     }
 }
 
-
+@Preview(
+    showSystemUi = true,
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_NO
+)
 @Composable
-fun ButtonGetStarted() {
-    Button(
-        onClick = {
-
-        },
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.White
-        ),
-        shape = RoundedCornerShape(50),
-        modifier = Modifier
-            .padding(
-                start = 20.dp,
-                top = 70.dp
-            )
-    ) {
-        Column {
-            Text(
-                text = "Get Started",
-                style = Typography.button,
-                modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp)
-            )
-        }
-    }
+fun SplashPreview() {
+    Splash(navController = rememberNavController())
 }
 
 @Composable
@@ -109,10 +113,4 @@ fun ImageShoesNikeSplash() {
 @Composable
 fun ImageShoesNikeSplashPreview() {
     ImageShoesNikeSplash()
-}
-
-@Preview
-@Composable
-fun ButtonGetStartedPreview() {
-    ButtonGetStarted()
 }
